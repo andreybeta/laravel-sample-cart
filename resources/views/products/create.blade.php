@@ -33,6 +33,9 @@
     </div>
 
 	{!! Form::close() !!}
-
+  
+  @foreach($errors->all() as $e)
+    - {{$e}} <br>
+  @endforeach
 
 @stop

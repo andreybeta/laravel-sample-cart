@@ -5,7 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 //use Illuminate\Http\Request;
-use Request;
+use App\Http\Requests\CreateProductRequest;
 
 class ProductsController extends Controller {
 
@@ -36,9 +36,11 @@ class ProductsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(CreateProductRequest $request)
 	{
-		$params = Request::all();
+		//validation
+
+		$params = $request->all();
 
 		Product::create($params);
 

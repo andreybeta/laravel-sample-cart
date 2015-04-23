@@ -15,7 +15,7 @@
 		<tbody>
 			@foreach ($products as $p)
 				<tr>
-					<td>{{ $p->name }} </td>
+					<td><a href="{{ url('products', $p) }}">{{ $p->name }}</a></td>
 					<td>{{ $p->description }} </td>
 					<td>{{ $p->price }} </td>
 					<td><a href="{{ url('products', $p) }}">Edit</a></td>
