@@ -4,8 +4,8 @@ use App\Product;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-//use Illuminate\Http\Request;
-use App\Http\Requests\CreateProductRequest;
+use Illuminate\Http\Request;
+//use App\Http\Requests\CreateProductRequest;
 
 class ProductsController extends Controller {
 
@@ -36,13 +36,30 @@ class ProductsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(CreateProductRequest $request)
+	// public function store(CreateProductRequest $request)
+	// {
+	// 	//validation
+	//
+	// 	$params = $request->all();
+	//
+	// 	Product::create($params);
+	//
+	// 	return redirect('products');
+	// }
+	
+	public function store(Request $request)
 	{
 		//validation
+		$V = $this->validate($request,
+			[
+				'name' => 'required|min:3',
+				'price' => 'required|numeric|min:0'
+			]
+		);
 
-		$params = $request->all();
-
-		Product::create($params);
+		if( !$V->fail() ){
+			Product::create($params);
+		}
 
 		return redirect('products');
 	}
