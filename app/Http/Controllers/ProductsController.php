@@ -1,11 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Product;
+use App\Category;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
-//use App\Http\Requests\CreateProductRequest;
+//use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 
 class ProductsController extends Controller {
 
@@ -28,7 +29,8 @@ class ProductsController extends Controller {
 	 */
 	public function create()
 	{
-		return view('products.create');
+		$categories = Category::lists('name', 'id');
+		return view('products.create', compact('categories'));
 	}
 
 	/**
@@ -36,33 +38,33 @@ class ProductsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	// public function store(CreateProductRequest $request)
-	// {
-	// 	//validation
-	//
-	// 	$params = $request->all();
-	//
-	// 	Product::create($params);
-	//
-	// 	return redirect('products');
-	// }
-	
-	public function store(Request $request)
+	public function store(ProductRequest $request)
 	{
 		//validation
-		$V = $this->validate($request,
-			[
-				'name' => 'required|min:3',
-				'price' => 'required|numeric|min:0'
-			]
-		);
 
-		if( !$V->fail() ){
-			Product::create($params);
-		}
+		$params = $request->all();
+
+		Product::create($params);
 
 		return redirect('products');
 	}
+
+	// public function store(Request $request)
+	// {
+	// 	//validation
+	// 	$V = $this->validate($request,
+	// 		[
+	// 			'name' => 'required|min:3',
+	// 			'price' => 'required|numeric|min:0'
+	// 		]
+	// 	);
+	//
+	// 	if( !$V->fail() ){
+	// 		Product::create($params);
+	// 	}
+	//
+	// 	return redirect('products');
+	// }
 
 	/**
 	 * Display the specified resource.
@@ -84,7 +86,10 @@ class ProductsController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$product = Product::findOrFail($id);
+		$categories = Category::lists('name', 'id');
+
+		return view('products.edit', compact('product', 'categories'));
 	}
 
 	/**
@@ -93,9 +98,11 @@ class ProductsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, ProductRequest $request)
 	{
-		//
+		$product = Product::findOrFail($id);
+		$product->update($request->all());
+		return redirect('products');
 	}
 
 	/**

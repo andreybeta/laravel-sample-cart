@@ -19,8 +19,9 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
-
-Route::get('/products', 'ProductsController@index');
-Route::get('/products/create', 'ProductsController@create');
-Route::get('/products/{id}', 'ProductsController@show');
-Route::post('products', 'ProductsController@store');
+//
+// Route::get('/products', 'ProductsController@index');
+// Route::get('/products/create', 'ProductsController@create');
+// Route::get('/products/{id}', 'ProductsController@show');
+// Route::post('products', 'ProductsController@store');
+Route::resource('products', 'ProductsController');

@@ -14,11 +14,20 @@ class CreateProductsTable extends Migration {
 	{
 		Schema::create('products', function(Blueprint $table)
 		{
+			$table->engine = "InnoDB";
+
 			$table->increments('id');
+			//$table->unsignedInteger('category_id');
+			$table->integer('category_id')->unsigned();
 			$table->string('name');
 			$table->string('description');
 			$table->decimal('price', 5, 2);
 			$table->timestamps();
+
+			$table->foreign('category_id')
+						->references('id')
+						->on('categories')
+						->onDelete('cascade');
 		});
 	}
 
