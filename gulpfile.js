@@ -1,4 +1,5 @@
 var elixir = require('laravel-elixir');
+//require('laravel-elixir-sass-compass');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,5 +13,13 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.less('app.less');
+    mix.less('app.less').sass('application.scss');
+    mix.styles([
+      'app.css',
+      'application.css'
+      ],
+      null, 'public/css'
+    );
+    mix.version('public/css/all.css');
+
 });
